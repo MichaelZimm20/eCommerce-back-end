@@ -49,6 +49,17 @@ router.get('/:id', (req, res) => {
         attributes: ['tag_name']
       }
     ]
+  })
+  .then(oneProductIdData => {
+    if (!oneProductIdData) {
+      res.status(404).json({ message: 'No Product found with this id !' });
+      return;
+    }
+    res.json(oneProductIdData);
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
   });
 });
 
