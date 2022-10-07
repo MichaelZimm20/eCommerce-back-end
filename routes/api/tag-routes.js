@@ -61,14 +61,50 @@ router.get('/:id', (req, res) => {
 // POST ROUTE, create new tag
 router.post('/', (req, res) => {
   // create a new tag
+  Tag.create({
+    tag_name: req.body.tag_name
+  })
+  .then(newTagData => res.json(newTagData))
+  .catch(err => {
+      console.log(err);
+      res.status(400).json(err);
+  })
 });
 
+// PUT ROUTE, update tag by id
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
+  Tag.update(req.body,
+    {
+      where: {
+          id: req.params.id
+      }
+    })
+    .then(updatedTagData => res.json(updatedTagData))
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 });
 
+// DELETE ROUTE, delete tag by id
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
+  Category.destroy({
+    where: {
+        id: req.params.id
+    }
+  })
+  .then(deleteTagData => {
+    if(!deleteTagData) {
+        res.status(404).json({ message: 'No Tag found with this id' });
+        return;
+    }
+    res.json(deleteTagData);
+})
+.catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+});
 });
 
 module.exports = router;

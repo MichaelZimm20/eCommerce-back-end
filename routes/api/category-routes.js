@@ -73,17 +73,10 @@ router.put('/:id', (req, res) => {
           id: req.params.id
       }
     })
-    .then(updatedCategoryData => {
-      if(!updatedCategoryData) {
-          res.status(404).json({ message: 'No Category found with this id' });
-          return;
-      }
-      res.json(updatedCategoryData);
-  })
-  .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
-  });
+    .then(updatedCategoryData => res.json(updatedCategoryData))
+    .catch((err) => {
+      res.status(400).json(err);
+    });
 });
 
 // DELETE ROUTE, delete category by id
