@@ -89,7 +89,7 @@ router.put('/:id', (req, res) => {
 // DELETE ROUTE, delete tag by id
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  Category.destroy({
+  Tag.destroy({
     where: {
         id: req.params.id
     }
